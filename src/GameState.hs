@@ -49,10 +49,10 @@ opositeMovement West = East
 --   You should take a look to System.Random documentation. 
 --   Also, in the import list you have all relevant functions.
 makeRandomPoint :: BoardInfo -> StdGen -> (Point, StdGen)
-makeRandomPoint bf g =
+makeRandomPoint BoardInfo{height = h, width = w} g =
   let
-      (x, g1) = uniformR (0, width bf - 1) g
-      (y, g2) = uniformR (0, height bf - 1) g1
+      (x, g1) = uniformR (0, w - 1) g
+      (y, g2) = uniformR (0, h - 1) g1
       p = (x,y) :: Point
   in (p, g2) 
 
