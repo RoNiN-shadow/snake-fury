@@ -51,8 +51,8 @@ opositeMovement West = East
 makeRandomPoint :: BoardInfo -> StdGen -> (Point, StdGen)
 makeRandomPoint bf g =
   let
-      (x, _) = uniformR (0, width bf - 1) g
-      (y, g2) = uniformR (0, height bf - 1) g
+      (x, g1) = uniformR (0, width bf - 1) g
+      (y, g2) = uniformR (0, height bf - 1) g1
       p = (x,y) :: Point
   in (p, g2) 
 
