@@ -32,7 +32,12 @@ data GameState = GameState
 
 -- | This function should calculate the opposite movement.
 opositeMovement :: Movement -> Movement
-opositeMovement = undefined
+-- opositeMovement = undefined
+opositeMovement North = South
+opositeMovement South = North
+opositeMovement East = West
+opositeMovement West = East
+
 
 -- >>> opositeMovement North == South
 -- >>> opositeMovement South == North
