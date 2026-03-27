@@ -61,5 +61,8 @@ Test-Suite test
   hs-source-dirs: test
   main-is: Spec.hs
   build-depends:
-    base, snake-fury, hspec
+    base,
+    snake-fury,
+    containers,
+    hspec
   default-language: Haskell2010
