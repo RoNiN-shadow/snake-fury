@@ -72,7 +72,7 @@ inSnake p s =
   let
     checkH    = p == snakeHead s
     checkTail = p `elem` snakeBody s
-  in checkH && checkTail
+  in checkH || checkTail
 
 {-
 This is a test for inSnake. It should return 
