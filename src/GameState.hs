@@ -70,16 +70,6 @@ inSnake p s =
     checkTail = p `elem` snakeBody s
   in checkH || checkTail
 
-{-
-This is a test for inSnake. It should return 
-True
-True
-False
--}
--- >>> snake_seq = SnakeSeq (1,1) (Data.Sequence.fromList [(1,2), (1,3)])
--- >>> inSnake (1,1) snake_seq
--- >>> inSnake (1,2) snake_seq
--- >>> inSnake (1,4) snake_seq
 
 -- | Calculates de new head of the snake. Considering it is moving in the current direction
 --   Take into acount the edges of the board
