@@ -39,10 +39,6 @@ opositeMovement East = West
 opositeMovement West = East
 
 
--- >>> opositeMovement North == South
--- >>> opositeMovement South == North
--- >>> opositeMovement East == West
--- >>> opositeMovement West == East
 
 
 -- | Purely creates a random point within the board limits
