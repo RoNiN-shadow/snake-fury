@@ -47,8 +47,8 @@ opositeMovement West = East
 makeRandomPoint :: BoardInfo -> StdGen -> (Point, StdGen)
 makeRandomPoint BoardInfo{height = h, width = w} g =
   let
-      (x, g1) = uniformR (0, w - 1) g
-      (y, g2) = uniformR (0, h - 1) g1
+      (x, g1) = uniformR (1, w) g
+      (y, g2) = uniformR (1, h) g1
       p = (x,y) :: Point
   in (p, g2) 
 
@@ -90,7 +90,11 @@ nextHead bf (GameState snk _ mv _) = (wrapX (hx+dx), wrapY (hy+dy))
 
 -- | Calculates a new random apple, avoiding creating the apple in the same place, or in the snake body
 newApple :: BoardInfo -> GameState -> (Point, StdGen)
-newApple = undefined
+newApple bf gm@(GameState snk apl _ g)
+    | p == apl || p `inSnake` snk = newApple bf gm{randomGen = g1}
+    | otherwise                   = (p, g1)
+
+    where (p, g1) = makeRandomPoint bf g
 
 {- We can't test this function because it depends on makeRandomPoint -}
 
