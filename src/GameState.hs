@@ -74,20 +74,17 @@ inSnake p s =
 -- | Calculates de new head of the snake. Considering it is moving in the current direction
 --   Take into acount the edges of the board
 nextHead :: BoardInfo -> GameState -> Point
-nextHead bf (GameState snk _ mv _) =
-      case mv of North -> lim $ add (-1, 0) (snakeHead snk)
-                 South -> lim $ add (1, 0) (snakeHead snk)
-                 West  -> lim $ add (0, -1) (snakeHead snk)
-                 East  -> lim $ add (0, 1) (snakeHead snk)
+nextHead bf (GameState snk _ mv _) = (wrapX (hx+dx), wrapY (hy+dy))
+    where
+      (hx, hy) = snakeHead snk
+      (dx,dy)  = case mv of 
+          North -> (-1,0)
+          South -> (1,0)
+          West  -> (0,-1)
+          East  -> (0, 1)
 
-
-      where
-        lim (x1, y1)
-          | x1 <= 0 && y1 <= 0 = (width bf, height bf)
-          | x1 <= 0 = (width bf, y1)
-          | y1 <= 0 = (x1, height bf)
-          | otherwise = (x1, y1)
-        add (x1, y1) (x2, y2)= (x1+x2, y1+y2)
+      wrapX x = ((x-1) `mod` width bf) + 1
+      wrapY y = ((y-1) `mod` height bf) + 1
 
 
 {-
