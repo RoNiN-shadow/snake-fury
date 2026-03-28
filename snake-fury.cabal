@@ -64,5 +64,6 @@ Test-Suite test
     base,
     snake-fury,
     containers,
-    hspec
+    hspec,
+    random
   default-language: Haskell2010
