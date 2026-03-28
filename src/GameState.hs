@@ -117,7 +117,46 @@ newApple bf gm@(GameState snk apl _ g)
 -- 
 
 move :: BoardInfo -> GameState -> (Board.RenderMessage , GameState)
-move = undefined
+move bf gm@(GameState (SnakeSeq oldhead snk) apl _ _)
+    | isCollision = (Board.GameOver, gm)
+    | isEating    = case snk of
+         S.Empty ->
+            let
+              newSnake = SnakeSeq newHead (S.singleton oldhead)
+              newState = gm{snakeSeq = newSnake, applePosition = newApplePos, randomGen = g}
+              delta = [(newHead, Board.SnakeHead), (oldhead, Board.Snake), (newApplePos, Board.Apple)]
+            in (Board.RenderBoard delta, newState)
+         xs ->
+           let 
+              newSnake = SnakeSeq newHead (oldhead :<| xs)
+              newState = gm{snakeSeq = newSnake, applePosition = newApplePos, randomGen = g}
+              delta = [(newHead, Board.SnakeHead), (oldhead, Board.Snake), (newApplePos, Board.Apple)]
+           in (Board.RenderBoard delta, newState)
+    | otherwise = case snk of
+        S.Empty ->
+            let
+              newSnake = SnakeSeq newHead S.empty
+              newState = gm {snakeSeq = newSnake}
+              delta = [(newHead, Board.SnakeHead), (oldhead, Board.Empty)]
+            in (Board.RenderBoard delta, newState)
+        x :<| S.Empty ->
+            let
+              newSnake = SnakeSeq newHead (S.singleton oldhead)
+              newState = gm {snakeSeq = newSnake}
+              delta = [(newHead, Board.SnakeHead), (oldhead, Board.Snake), (x, Board.Empty)]
+            in (Board.RenderBoard delta, newState)
+        x :<| (xs :|> t) ->
+            let
+              newSnake = SnakeSeq newHead (oldhead :<| x :<| xs)
+              newState = gm {snakeSeq = newSnake}
+              delta = [(newHead, Board.SnakeHead), (oldhead, Board.Snake), (t, Board.Empty)]
+            in (Board.RenderBoard delta, newState)
+
+    where
+      newHead          = nextHead bf gm
+      isCollision      = newHead `elem` snk 
+      isEating         = newHead == apl
+      (newApplePos, g) = newApple bf gm
 
 {- This is a test for move. It should return
 
