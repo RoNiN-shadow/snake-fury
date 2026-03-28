@@ -87,22 +87,6 @@ nextHead bf (GameState snk _ mv _) = (wrapX (hx+dx), wrapY (hy+dy))
       wrapY y = ((y-1) `mod` height bf) + 1
 
 
-{-
-This is a test for nextHead. It should return
-True
-True
-True
--}
--- >>> snake_seq = SnakeSeq (1,1) (Data.Sequence.fromList [(1,2), (1,3)])
--- >>> apple_pos = (2,2) 
--- >>> board_info = BoardInfo 4 4
--- >>> game_state1 = GameState snake_seq apple_pos West (System.Random.mkStdGen 1)
--- >>> game_state2 = GameState snake_seq apple_pos South (System.Random.mkStdGen 1)
--- >>> game_state3 = GameState snake_seq apple_pos North (System.Random.mkStdGen 1)
--- >>> nextHead board_info game_state1 == (1,4)
--- >>> nextHead board_info game_state2 == (2,1)
--- >>> nextHead board_info game_state3 == (4,1)
-
 
 -- | Calculates a new random apple, avoiding creating the apple in the same place, or in the snake body
 newApple :: BoardInfo -> GameState -> (Point, StdGen)
